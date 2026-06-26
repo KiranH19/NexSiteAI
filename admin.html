@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite - Administration Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-nav" style="background: #11121c; border-right: 1px solid rgba(255,255,255,0.05);">
+      <div class="logo" style="font-size: 1.5rem; margin-bottom: 30px;">
+        <ion-icon name="shield-half-outline" style="color: var(--danger-accent);"></ion-icon> NexSite Admin
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding-left: 16px;">Super Admin</div>
+      
+      <ul class="dash-menu">
+        <li id="menu-stats" class="dash-menu-item active" onclick="switchAdminTab('stats')">
+          <ion-icon name="analytics-outline"></ion-icon> Overview Stats
+        </li>
+        <li id="menu-websites" class="dash-menu-item" onclick="switchAdminTab('websites')">
+          <ion-icon name="globe-outline"></ion-icon> All Websites
+        </li>
+        <li id="menu-leads" class="dash-menu-item" onclick="switchAdminTab('leads')">
+          <ion-icon name="mail-outline"></ion-icon> All Leads
+        </li>
+        <li id="menu-payments" class="dash-menu-item" onclick="switchAdminTab('payments')">
+          <ion-icon name="card-outline"></ion-icon> Payments Logs
+        </li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--bg-card-border);">
+        <div style="margin-bottom: 15px; font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; padding: 0 16px;">
+          <ion-icon name="person-circle-outline" style="font-size: 1.2rem; color: var(--danger-accent);"></ion-icon>
+          <span>Administrator</span>
+        </div>
+        <button class="btn btn-secondary" style="width: 100%; justify-content: center; gap: 8px;" onclick="API.logout()">
+          <ion-icon name="log-out-outline"></ion-icon> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="dashboard-main">
+
+      <!-- ==================== TAB 1: OVERVIEW STATS ==================== -->
+      <section id="tab-stats" class="tab-content active">
+        <div style="margin-bottom: 32px;">
+          <h1 style="font-size: 2.2rem;">Overview Stats</h1>
+          <p style="color: var(--text-secondary); margin-top: 4px;">Global metrics and SaaS platform operations.</p>
+        </div>
+
+        <div class="stats-grid">
+          
+          <div class="glass-panel stat-box">
+            <div class="stat-num" id="stat-total-sites">0</div>
+            <div class="stat-label">Total Websites</div>
+          </div>
+
+          <div class="glass-panel stat-box">
+            <div class="stat-num" id="stat-total-leads">0</div>
+            <div class="stat-label">Total Leads Captured</div>
+          </div>
+
+          <div class="glass-panel stat-box">
+            <div class="stat-num" style="color: var(--success-accent);" id="stat-total-revenue">₹0</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+
+          <div class="glass-panel stat-box">
+            <div class="stat-num" id="stat-paid-sites">0</div>
+            <div class="stat-label">Paid Deployments</div>
+          </div>
+
+        </div>
+
+        <div class="glass-panel" style="padding: 32px; text-align: left; max-width: 600px;">
+          <h3 style="font-size:1.2rem; margin-bottom:12px;">SaaS Administrator Controls</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.5; margin-bottom:20px;">Use the sidebar menus to inspect registered business pages, track all submitted contact forms, or audit incoming billing transactions in real-time.</p>
+          <a href="index.html" class="btn btn-secondary"><ion-icon name="home-outline"></ion-icon> Visit NexSite Homepage</a>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: WEBSITES ==================== -->
+      <section id="tab-websites" class="tab-content">
+        <h1 style="font-size: 2.2rem; margin-bottom: 8px;">All Websites</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Database records for all generated websites across the platform.</p>
+
+        <div class="glass-panel table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Business Name</th>
+                <th>Slug Link</th>
+                <th>Category</th>
+                <th>Layout Template</th>
+                <th>Plan choice</th>
+                <th>Payment Status</th>
+                <th>Status</th>
+                <th>Created Date</th>
+              </tr>
+            </thead>
+            <tbody id="admin-websites-tbody">
+              <!-- Populated via script -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: LEADS ==================== -->
+      <section id="tab-leads" class="tab-content">
+        <h1 style="font-size: 2.2rem; margin-bottom: 8px;">All Leads</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Every contact form submission captured across the system.</p>
+
+        <div class="glass-panel table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Lead Sender</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Message text</th>
+                <th>Source Website</th>
+                <th>Date Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="admin-leads-tbody">
+              <!-- Populated via script -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 4: PAYMENTS ==================== -->
+      <section id="tab-payments" class="tab-content">
+        <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Payments History</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Real-time logs of invoices processed via Razorpay.</p>
+
+        <div class="glass-panel table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Target Website</th>
+                <th>Razorpay Order ID</th>
+                <th>Razorpay Payment ID</th>
+                <th>Amount Charged</th>
+                <th>Currency</th>
+                <th>Gateway Status</th>
+                <th>Transaction Date</th>
+              </tr>
+            </thead>
+            <tbody id="admin-payments-tbody">
+              <!-- Populated via script -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,641 @@
+/* NexSite - Dynamic Template Stylesheet */
+
+/* ==========================================================================
+   1. COMMON TEMPLATE WRAPPER STYLES
+   All templates are injected into an iframe or public container.
+   ========================================================================== */
+.site-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.site-logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-logo img {
+  max-height: 36px;
+}
+
+.site-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+}
+
+.site-nav a {
+  font-weight: 500;
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover {
+  color: var(--brand-color);
+}
+
+/* Sections Core Layout */
+.site-section {
+  padding: 100px 8%;
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-subheading {
+  text-align: center;
+  color: #6b7280;
+  max-width: 700px;
+  margin: 0 auto 60px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Floating WhatsApp Button */
+.wa-float-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+}
+
+.wa-float-btn:hover {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* Contact Form Template */
+.tpl-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 40px;
+}
+
+.tpl-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tpl-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.tpl-info-icon {
+  background: var(--brand-bg-light);
+  color: var(--brand-color);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.tpl-info-text h4 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  color: #111827;
+}
+
+.tpl-info-text p {
+  color: #4b5563;
+}
+
+.tpl-form {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.tpl-form-group {
+  margin-bottom: 20px;
+}
+
+.tpl-form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.tpl-form-input, .tpl-form-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.tpl-form-input:focus, .tpl-form-textarea:focus {
+  outline: none;
+  border-color: var(--brand-color);
+}
+
+/* Responsive adjust */
+@media (max-width: 768px) {
+  .site-header { padding: 15px 5%; }
+  .site-nav { display: none; } /* Mobile navbar would toggle, keeping basic for MVP */
+  .site-section { padding: 60px 5%; }
+  .tpl-contact-grid { grid-template-columns: 1fr; }
+  .section-heading { font-size: 2rem; }
+}
+
+/* ==========================================================================
+   2. TEMPLATE 1: COACHING INSTITUTE ("EduFlex")
+   ========================================================================== */
+.tpl-coaching {
+  --brand-color: #3b82f6;       /* Blue */
+  --brand-color-dark: #1d4ed8;
+  --brand-bg-light: #eff6ff;
+  --text-dark: #1e3a8a;
+  font-family: 'Inter', sans-serif;
+}
+
+.tpl-coaching .hero-bg {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  padding: 120px 8%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tpl-coaching .hero-bg::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+}
+
+.tpl-coaching .hero-content h1 {
+  font-size: 3.2rem;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.tpl-coaching .hero-content p {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tpl-coaching .btn-brand {
+  background-color: var(--brand-color);
+  color: #fff;
+  border-radius: 50px;
+  padding: 14px 36px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.tpl-coaching .btn-brand:hover {
+  background-color: var(--brand-color-dark);
+  transform: translateY(-2px);
+}
+
+/* Service Grid */
+.tpl-coaching .service-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 32px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+}
+
+.tpl-coaching .service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* FAQ Details Accordion */
+.tpl-coaching .faq-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tpl-coaching details {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tpl-coaching details[open] {
+  border-color: var(--brand-color);
+  background: var(--brand-bg-light);
+}
+
+.tpl-coaching summary {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.tpl-coaching summary::-webkit-details-marker {
+  display: none;
+}
+
+.tpl-coaching summary::after {
+  content: '+';
+  font-size: 1.4rem;
+}
+
+.tpl-coaching details[open] summary::after {
+  content: '-';
+}
+
+.tpl-coaching .faq-content {
+  margin-top: 12px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   3. TEMPLATE 2: CLINIC / DIAGNOSTICS ("MedCare")
+   ========================================================================== */
+.tpl-medical {
+  --brand-color: #0d9488;       /* Teal */
+  --brand-color-dark: #0f766e;
+  --brand-bg-light: #f0fdfa;
+  --text-dark: #115e59;
+  font-family: 'Inter', sans-serif;
+}
+
+.tpl-medical .hero-bg {
+  background: radial-gradient(circle at 10% 20%, #f0fdfa 0%, #ccfbf1 90%);
+  padding: 110px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.tpl-medical .hero-content {
+  max-width: 650px;
+}
+
+.tpl-medical .hero-content h1 {
+  font-size: 3rem;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tpl-medical .hero-content p {
+  color: #374151;
+  font-size: 1.15rem;
+  margin-bottom: 36px;
+}
+
+.tpl-medical .btn-brand {
+  background-color: var(--brand-color);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-weight: 600;
+}
+
+.tpl-medical .btn-brand:hover {
+  background-color: var(--brand-color-dark);
+}
+
+.tpl-medical .service-card {
+  background: #ffffff;
+  border-top: 4px solid var(--brand-color);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+  padding: 32px;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.tpl-medical .service-card:hover {
+  transform: translateY(-5px);
+}
+
+.tpl-medical .faq-item {
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.tpl-medical .faq-item h4 {
+  color: var(--text-dark);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   4. TEMPLATE 3: GYM / FITNESS ("IronPulse")
+   ========================================================================== */
+.tpl-fitness {
+  --brand-color: #ea580c;       /* Orange */
+  --brand-color-dark: #c2410c;
+  --brand-bg-light: #fff7ed;
+  --bg-gym-dark: #111116;
+  font-family: 'Outfit', sans-serif;
+  color: #e5e7eb;
+  background-color: var(--bg-gym-dark);
+}
+
+.tpl-fitness .site-header {
+  background-color: #0b0b0e;
+  border-bottom: 1px solid #1f1f29;
+}
+
+.tpl-fitness .site-header .site-logo {
+  color: #ffffff;
+}
+
+.tpl-fitness .site-header a {
+  color: #a1a1aa;
+}
+
+.tpl-fitness .site-header a:hover {
+  color: var(--brand-color);
+}
+
+.tpl-fitness .hero-bg {
+  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+  padding: 160px 8%;
+  text-align: center;
+}
+
+.tpl-fitness .hero-content h1 {
+  font-size: 4rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.tpl-fitness .hero-content p {
+  color: #d1d5db;
+  font-size: 1.25rem;
+  margin-bottom: 40px;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tpl-fitness .btn-brand {
+  background-color: var(--brand-color);
+  color: #ffffff;
+  padding: 14px 36px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+}
+
+.tpl-fitness .btn-brand:hover {
+  background-color: var(--brand-color-dark);
+  transform: scale(1.02);
+}
+
+.tpl-fitness .section-heading {
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.tpl-fitness .service-card {
+  background: #18181f;
+  border: 1px solid #23232f;
+  padding: 36px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tpl-fitness .service-card h3 {
+  color: #ffffff;
+  font-size: 1.4rem;
+  margin-top: 16px;
+}
+
+.tpl-fitness .service-card p {
+  color: #a1a1aa;
+}
+
+.tpl-fitness .faq-accordion details {
+  background: #18181f;
+  border: 1px solid #23232f;
+  border-radius: 6px;
+}
+
+.tpl-fitness .faq-accordion summary {
+  color: #ffffff;
+}
+
+.tpl-fitness .tpl-form {
+  background: #18181f;
+  border-color: #23232f;
+}
+
+.tpl-fitness .tpl-form-input, .tpl-fitness .tpl-form-textarea {
+  background: #0f0f13;
+  border-color: #2e2e3f;
+  color: #ffffff;
+}
+
+.tpl-fitness .tpl-form-input:focus, .tpl-fitness .tpl-form-textarea:focus {
+  border-color: var(--brand-color);
+}
+
+/* ==========================================================================
+   5. TEMPLATE 4: RESTAURANT / CAFE ("BiteBistro")
+   ========================================================================== */
+.tpl-restaurant {
+  --brand-color: #d97706;       /* Amber */
+  --brand-color-dark: #b45309;
+  --brand-bg-light: #fef3c7;
+  --text-dark: #78350f;
+  font-family: 'Outfit', sans-serif;
+  background-color: #fdfbf7;
+}
+
+.tpl-restaurant .site-header {
+  background-color: #fdfbf7;
+}
+
+.tpl-restaurant .hero-bg {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+  padding: 150px 8%;
+  text-align: center;
+}
+
+.tpl-restaurant .hero-content h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.8rem;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.tpl-restaurant .hero-content p {
+  color: #f3f4f6;
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.tpl-restaurant .btn-brand {
+  background-color: var(--brand-color);
+  color: #fff;
+  border-radius: 30px;
+  padding: 12px 36px;
+  font-weight: 600;
+}
+
+.tpl-restaurant .btn-brand:hover {
+  background-color: var(--brand-color-dark);
+}
+
+.tpl-restaurant .service-card {
+  background: #ffffff;
+  border: 1px solid #f3e8ff; /* Warm border */
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(120, 53, 15, 0.03);
+}
+
+.tpl-restaurant .service-card h3 {
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   6. TEMPLATE 5: BUSINESS / CORPORATE ("ApexDigital")
+   ========================================================================== */
+.tpl-corporate {
+  --brand-color: #6366f1;       /* Indigo */
+  --brand-color-dark: #4f46e5;
+  --brand-bg-light: #e0e7ff;
+  --text-dark: #312e81;
+  font-family: 'Inter', sans-serif;
+}
+
+.tpl-corporate .hero-bg {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  padding: 140px 8%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.tpl-corporate .hero-content {
+  max-width: 700px;
+}
+
+.tpl-corporate .hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.tpl-corporate .hero-content p {
+  color: #c7d2fe;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.tpl-corporate .btn-brand {
+  background-color: #ffffff;
+  color: var(--text-dark);
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.tpl-corporate .btn-brand:hover {
+  background-color: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.tpl-corporate .section-heading {
+  color: #1e1b4b;
+}
+
+.tpl-corporate .service-card {
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.tpl-corporate .service-card:hover {
+  border-color: var(--brand-color);
+}

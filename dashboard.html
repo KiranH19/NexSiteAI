@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite - Merchant CMS Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-nav">
+      <div class="logo" style="font-size: 1.5rem; margin-bottom: 30px;">
+        <ion-icon name="flash-outline"></ion-icon> NexSite CMS
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding-left: 16px;">Merchant Dashboard</div>
+      
+      <ul class="dash-menu">
+        <li id="menu-sites" class="dash-menu-item active" onclick="switchDashboardTab('sites')">
+          <ion-icon name="globe-outline"></ion-icon> My Websites
+        </li>
+        <li id="menu-leads" class="dash-menu-item" onclick="switchDashboardTab('leads')">
+          <ion-icon name="people-outline"></ion-icon> Customer Leads
+        </li>
+        <li id="menu-billing" class="dash-menu-item" onclick="switchDashboardTab('billing')">
+          <ion-icon name="card-outline"></ion-icon> Subscriptions
+        </li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--bg-card-border);">
+        <div style="margin-bottom: 15px; font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; padding: 0 16px;">
+          <ion-icon name="person-circle-outline" style="font-size: 1.2rem;"></ion-icon>
+          <span id="user-email-display">user@business.com</span>
+        </div>
+        <button class="btn btn-secondary" style="width: 100%; justify-content: center; gap: 8px;" onclick="API.logout()">
+          <ion-icon name="log-out-outline"></ion-icon> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="dashboard-main">
+
+      <!-- ==================== TAB 1: WEBSITES LIST ==================== -->
+      <section id="tab-sites" class="tab-content active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+          <div>
+            <h1 style="font-size: 2.2rem;">My Websites</h1>
+            <p style="color: var(--text-secondary); margin-top: 4px;">View and edit your AI generated business landing pages.</p>
+          </div>
+          <a href="chat.html" class="btn btn-primary">
+            <ion-icon name="add-outline"></ion-icon> Generate New Site
+          </a>
+        </div>
+
+        <div id="sites-list-container" class="grid-3">
+          <!-- Dynamically populated via script -->
+        </div>
+      </section>
+
+      <!-- ==================== TAB 1.5: CMS WEBSITE EDITOR ==================== -->
+      <section id="tab-cms-editor" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 16px;">
+          <div>
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; margin-bottom: 8px;" onclick="switchDashboardTab('sites')">
+              <ion-icon name="arrow-back-outline"></ion-icon> Back to Sites
+            </button>
+            <h1 id="cms-site-title" style="font-size: 1.8rem;">Edit Website Content</h1>
+          </div>
+          <button class="btn btn-primary" onclick="saveCmsEdits()">
+            <ion-icon name="save-outline"></ion-icon> Save Changes & Publish
+          </button>
+        </div>
+
+        <div class="cms-grid">
+          
+          <!-- Left Forms Panel -->
+          <div class="glass-panel cms-section" style="overflow-y: auto; max-height: calc(100vh - 200px); display: flex; flex-direction: column; gap: 24px;">
+            
+            <input type="hidden" id="edit-site-id">
+
+            <!-- Section 1: Business Details -->
+            <div>
+              <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 8px; margin-bottom: 15px;">Business Information</h3>
+              <div class="form-group">
+                <label class="form-label" for="edit-business-name">Business Name</label>
+                <input class="text-input" type="text" id="edit-business-name" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-template">Layout Template</label>
+                <select id="edit-template" class="select-input" onchange="triggerCmsPreview()">
+                  <option value="corporate">Corporate Agency (ApexDigital)</option>
+                  <option value="coaching">Coaching Academy (EduFlex)</option>
+                  <option value="medical">Medical Clinic (MedCare)</option>
+                  <option value="fitness">Fitness Studio (IronPulse)</option>
+                  <option value="restaurant">Bistro Cafe (BiteBistro)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-phone">Contact Phone</label>
+                <input class="text-input" type="text" id="edit-phone" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-email">Contact Email</label>
+                <input class="text-input" type="email" id="edit-email" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-address">Physical Address</label>
+                <input class="text-input" type="text" id="edit-address" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-logo-url">Logo Image URL</label>
+                <input class="text-input" type="text" id="edit-logo-url" oninput="triggerCmsPreview()">
+              </div>
+            </div>
+
+            <!-- Section 2: Hero Layout Copy -->
+            <div>
+              <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 8px; margin-bottom: 15px;">Hero Cover</h3>
+              <div class="form-group">
+                <label class="form-label" for="edit-hero-title">Headline</label>
+                <input class="text-input" type="text" id="edit-hero-title" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-hero-subtitle">Sub-headline</label>
+                <textarea class="textarea-input" id="edit-hero-subtitle" oninput="triggerCmsPreview()"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-hero-cta">CTA Button Text</label>
+                <input class="text-input" type="text" id="edit-hero-cta" oninput="triggerCmsPreview()">
+              </div>
+            </div>
+
+            <!-- Section 3: About Story -->
+            <div>
+              <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 8px; margin-bottom: 15px;">About Story</h3>
+              <div class="form-group">
+                <label class="form-label" for="edit-about-title">Title</label>
+                <input class="text-input" type="text" id="edit-about-title" oninput="triggerCmsPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-about-description">Short Intro</label>
+                <textarea class="textarea-input" id="edit-about-description" oninput="triggerCmsPreview()"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="edit-about-story">Long Core Story</label>
+                <textarea class="textarea-input" id="edit-about-story" oninput="triggerCmsPreview()"></textarea>
+              </div>
+            </div>
+
+            <!-- Section 4: Services CMS List -->
+            <div>
+              <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 8px; margin-bottom: 15px;">Services Outlines</h3>
+              <div id="cms-services-fields">
+                <!-- Injected dynamically based on session data size -->
+              </div>
+            </div>
+
+            <!-- Section 5: FAQs -->
+            <div>
+              <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--bg-card-border); padding-bottom: 8px; margin-bottom: 15px;">Frequently Asked Questions</h3>
+              <div id="cms-faqs-fields">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Live Preview Panel -->
+          <div class="preview-iframe-container" style="border: 1px solid var(--bg-card-border); border-radius: 20px; overflow: hidden; height: calc(100vh - 200px);">
+            <div class="preview-top-toolbar" style="border-radius: 20px 20px 0 0;">
+              <span>Live CMS Previewer (Real-time updates)</span>
+              <div class="device-selectors">
+                <button id="cms-device-desktop" class="device-btn active" onclick="switchCmsDevice('desktop')"><ion-icon name="desktop-outline"></ion-icon></button>
+                <button id="cms-device-mobile" class="device-btn" onclick="switchCmsDevice('mobile')"><ion-icon name="screen-smartphone-outline"></ion-icon></button>
+              </div>
+            </div>
+            <iframe id="cms-preview-frame" class="preview-iframe" src="about:blank" style="background:#fff;"></iframe>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: LEADS LIST ==================== -->
+      <section id="tab-leads" class="tab-content">
+        <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Customer Leads</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Every time a client submits your website's contact form, their information appears below.</p>
+
+        <div class="glass-panel table-container">
+          <table class="admin-table" id="leads-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Message Content</th>
+                <th>Website Target</th>
+                <th>Submitted Date</th>
+              </tr>
+            </thead>
+            <tbody id="leads-list-tbody">
+              <!-- Populated via script -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: BILLING & PLANS ==================== -->
+      <section id="tab-billing" class="tab-content">
+        <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Subscription Details</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Manage plan updates, invoices, and billing parameters.</p>
+
+        <div class="grid-3" id="billing-plans-container" style="margin-bottom: 40px;">
+          <!-- Active Plan Details -->
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite - Access Your Account</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <ion-icon name="flash-outline"></ion-icon> NexSite
+    </a>
+    <a href="index.html" class="btn btn-secondary">Back to Home</a>
+  </header>
+
+  <!-- Login/Signup Portal -->
+  <main class="auth-container">
+    <div class="glass-panel auth-card">
+      
+      <div class="auth-header">
+        <h2 id="portal-title">Welcome Back</h2>
+        <p id="portal-subtitle">Log in to modify your generated website content.</p>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+        <button id="tab-login" class="btn btn-primary" style="flex: 1; padding: 10px;" onclick="switchTab('login')">Login</button>
+        <button id="tab-signup" class="btn btn-secondary" style="flex: 1; padding: 10px;" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <form id="auth-form" onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label class="form-label" for="auth-email">Email Address</label>
+          <input class="text-input" type="email" id="auth-email" required placeholder="name@company.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="auth-password">Password</label>
+          <input class="text-input" type="password" id="auth-password" required placeholder="••••••••" minlength="6">
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 12px;">
+          Log In
+        </button>
+      </form>
+      
+      <p id="auth-toggle-hint" style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+        Don't have an account? <a href="#" style="color: var(--primary-accent); font-weight: 500;" onclick="switchTab('signup')">Sign Up here</a>.
+      </p>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script>
+    let currentMode = 'login'; // 'login' or 'signup'
+
+    // Check if user is already logged in
+    window.onload = function() {
+      const user = API.getUser();
+      const token = API.getToken();
+      if (user && token) {
+        redirectUser(user);
+      }
+    };
+
+    function switchTab(mode) {
+      currentMode = mode;
+      const title = document.getElementById('portal-title');
+      const subtitle = document.getElementById('portal-subtitle');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const hint = document.getElementById('auth-toggle-hint');
+      const tabLogin = document.getElementById('tab-login');
+      const tabSignup = document.getElementById('tab-signup');
+
+      if (mode === 'signup') {
+        title.textContent = 'Create Account';
+        subtitle.textContent = 'Register to build and publish your AI website.';
+        submitBtn.textContent = 'Create Free Account';
+        hint.innerHTML = `Already have an account? <a href="#" style="color: var(--primary-accent); font-weight: 500;" onclick="switchTab('login')">Log In here</a>.`;
+        
+        tabSignup.className = 'btn btn-primary';
+        tabLogin.className = 'btn btn-secondary';
+      } else {
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Log in to modify your generated website content.';
+        submitBtn.textContent = 'Log In';
+        hint.innerHTML = `Don't have an account? <a href="#" style="color: var(--primary-accent); font-weight: 500;" onclick="switchTab('signup')">Sign Up here</a>.`;
+        
+        tabLogin.className = 'btn btn-primary';
+        tabSignup.className = 'btn btn-secondary';
+      }
+    }
+
+    async function handleAuth(event) {
+      event.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const submitBtn = document.getElementById('auth-submit-btn');
+
+      if (!email || !password) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = currentMode === 'login' ? 'Logging in...' : 'Registering...';
+
+      try {
+        let result;
+        if (currentMode === 'login') {
+          result = await API.login(email, password);
+          API.showToast('Login successful!');
+        } else {
+          result = await API.register(email, password);
+          API.showToast('Registration successful!');
+        }
+
+        setTimeout(() => {
+          redirectUser(result.user);
+        }, 1000);
+
+      } catch (err) {
+        API.showToast(err.message || 'Authentication failed.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = currentMode === 'login' ? 'Log In' : 'Create Free Account';
+      }
+    }
+
+    function redirectUser(user) {
+      if (user.email === 'admin@nexsite.com' || (user.user_metadata && user.user_metadata.role === 'admin')) {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>

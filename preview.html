@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite - Preview & Publish</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body style="overflow: hidden;">
+
+  <div class="preview-layout">
+    
+    <!-- Sidebar Customizer Panel -->
+    <aside class="preview-sidebar">
+      <div style="margin-bottom: 24px;">
+        <h2 style="font-size: 1.5rem; display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="create-outline" style="color: var(--primary-accent);"></ion-icon> Customize Website
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">Choose template styles and publish your site.</p>
+      </div>
+
+      <!-- Template Choice -->
+      <div class="sidebar-section">
+        <h3>1. Layout Template</h3>
+        <div class="form-group">
+          <label class="form-label" for="template-select">Select Theme Layout</label>
+          <select id="template-select" class="select-input" onchange="updatePreview()">
+            <option value="corporate">Corporate Agency (ApexDigital)</option>
+            <option value="coaching">Coaching Academy (EduFlex)</option>
+            <option value="medical">Medical Clinic (MedCare)</option>
+            <option value="fitness">Fitness Studio (IronPulse)</option>
+            <option value="restaurant">Bistro Cafe (BiteBistro)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Pricing Plans -->
+      <div class="sidebar-section">
+        <h3>2. Pricing Plan</h3>
+        <div class="form-group">
+          <label class="form-label" for="plan-select">Choose Subscription</label>
+          <select id="plan-select" class="select-input" onchange="handlePlanChange()">
+            <option value="starter">Starter Plan (₹299 setup + ₹59/mo)</option>
+            <option value="premium">Premium Plan (₹999 setup + ₹99/mo)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- User Account Creation / Linking -->
+      <div class="sidebar-section" id="auth-link-section">
+        <h3>3. Account Details</h3>
+        <div id="auth-status-logged-in" style="display: none; padding: 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; margin-bottom: 15px;">
+          <span style="font-size: 0.85rem; color: var(--success-accent); font-weight: 500; display: flex; align-items: center; gap: 6px;">
+            <ion-icon name="checkbox-outline"></ion-icon> Logged in: <span id="logged-in-email">user@domain.com</span>
+          </span>
+        </div>
+
+        <div id="auth-fields">
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">Create password credentials to manage your site and leads via CMS dashboard later.</p>
+          <div class="form-group">
+            <label class="form-label" for="account-email">Admin Email Address</label>
+            <input class="text-input" type="email" id="account-email" placeholder="owner@mybusiness.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="account-password">CMS Password</label>
+            <input class="text-input" type="password" id="account-password" placeholder="••••••••" minlength="6">
+          </div>
+        </div>
+      </div>
+
+      <!-- Publish Action -->
+      <div style="margin-top: auto; padding-top: 24px;">
+        <button id="publish-btn" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem;" onclick="initiatePublish()">
+          <ion-icon name="rocket-outline"></ion-icon> Pay & Publish Website
+        </button>
+        <a href="chat.html" style="display: block; text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--text-secondary);">
+          <ion-icon name="arrow-back-outline" style="vertical-align: middle;"></ion-icon> Back to Chat Agent
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Live Screen Previewer Frame -->
+    <main class="preview-iframe-container">
+      
+      <!-- Toolbar -->
+      <div class="preview-top-toolbar">
+        <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);" id="preview-url-display">
+          Previewing: <span style="color: var(--text-primary);" id="preview-site-title">My Site</span>
+        </span>
+        <div class="device-selectors">
+          <button id="device-desktop" class="device-btn active" onclick="switchDevice('desktop')" title="Desktop View">
+            <ion-icon name="desktop-outline"></ion-icon>
+          </button>
+          <button id="device-mobile" class="device-btn" onclick="switchDevice('mobile')" title="Mobile View">
+            <ion-icon name="screen-smartphone-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- The Real Layout Target Frame -->
+      <iframe id="preview-frame" class="preview-iframe" src="about:blank"></iframe>
+
+    </main>
+
+  </div>
+
+  <!-- Load Razorpay Standard Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <script src="js/api.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/preview.js"></script>
+</body>
+</html>
