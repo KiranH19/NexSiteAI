@@ -25,4 +25,8 @@
   "type": "commonjs",
   "author": "NexSite Team",
   "license": "MIT"
+  
+}
+"engines": {
+  "node": "20.x"
 }
