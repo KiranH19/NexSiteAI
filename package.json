@@ -20,13 +20,9 @@
     "nodemon": "^3.1.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.x"
   },
   "type": "commonjs",
   "author": "NexSite Team",
   "license": "MIT"
-  
-}
-"engines": {
-  "node": "20.x"
 }
