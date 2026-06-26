@@ -117,3 +117,7 @@ router.get('/payments', authenticateAdmin, async (req, res) => {
 
 module.exports = router;
  // Export for custom endpoints if needed
+module.exports = {
+  router,
+  authenticateAdmin
+};
