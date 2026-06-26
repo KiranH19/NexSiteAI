@@ -128,6 +128,14 @@ app.get('/api/leads/by-website/:websiteId', async (req, res) => {
   }
 });
 
+app.get('/api/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'NexSite backend is running',
+    time: new Date().toISOString()
+  });
+});
+
 // Serve frontend static folders
 app.use(express.static(path.join(__dirname)));
 
@@ -146,10 +154,12 @@ app.use((err, req, res, next) => {
 });
 
 // Launch listener
-app.listen(PORT, () => {
+// Launch listener
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`====================================================`);
   console.log(`🚀 NexSite SaaS MVP launched successfully!`);
-  console.log(`🌐 Server running at: http://localhost:${PORT}`);
+  console.log(`🌐 Server running on port: ${PORT}`);
   console.log(`📁 Static files served from: ${__dirname}`);
   console.log(`====================================================`);
 });
+
