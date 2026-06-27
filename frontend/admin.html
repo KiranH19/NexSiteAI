@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--dark); min-height: 100vh; }
+
+    /* ── Sidebar layout ── */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    .admin-sidebar {
+      background: var(--dark-2);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .admin-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 20px; font-weight: 800; color: var(--white);
+      text-decoration: none;
+      padding: 8px 12px;
+      margin-bottom: 16px;
+    }
+    .admin-brand .logo-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 8px 12px 4px;
+      margin-top: 8px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: var(--radius);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font);
+      transition: var(--transition);
+    }
+    .tab-btn:hover  { background: var(--card-bg); color: var(--text); }
+    .tab-btn.active { background: rgba(108,99,255,0.12); color: var(--primary); font-weight: 600; }
+    .tab-btn .tab-icon { font-size: 16px; }
+
+    .sidebar-bottom { margin-top: auto; }
+
+    /* ── Main content ── */
+    .admin-main {
+      margin-left: 240px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    .admin-header {
+      margin-bottom: 32px;
+    }
+    .admin-header h1 { font-size: 28px; color: var(--white); margin-bottom: 4px; }
+    .admin-header p  { color: var(--text-muted); font-size: 15px; }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: var(--transition);
+    }
+    .stat-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+    .stat-card-icon  { font-size: 28px; margin-bottom: 12px; }
+    .stat-card-val   { font-size: 36px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; }
+    .stat-card-label { font-size: 13px; color: var(--text-muted); }
+
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .panel-header h2 { font-size: 20px; color: var(--white); }
+
+    /* Table */
+    .data-table-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th {
+      background: var(--dark-2);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .data-table code {
+      background: var(--dark-3);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--primary);
+    }
+
+    .admin-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .admin-link:hover { text-decoration: underline; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+    }
+    .empty-state .es-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+
+    /* Refresh btn */
+    .btn-refresh {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-refresh:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { display: none; }
+      .admin-main { margin-left: 0; padding: 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+
+    <!-- ─── Sidebar ──────────────────────────────────────────────────────── -->
+    <aside class="admin-sidebar">
+      <a href="/" class="admin-brand">
+        <div class="logo-icon">🌐</div>
+        NexSite
+      </a>
+
+      <div class="sidebar-section-label">Dashboard</div>
+      <button class="tab-btn active" data-tab="overview">
+        <span class="tab-icon">📊</span> Overview
+      </button>
+
+      <div class="sidebar-section-label">Data</div>
+      <button class="tab-btn" data-tab="websites">
+        <span class="tab-icon">🌐</span> Websites
+      </button>
+      <button class="tab-btn" data-tab="leads">
+        <span class="tab-icon">📞</span> Leads
+      </button>
+
+      <div class="sidebar-bottom">
+        <div style="padding:12px;background:var(--card-bg);border-radius:var(--radius);border:1px solid var(--border)">
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">NexSite Admin Panel</div>
+          <div style="font-size:11px;color:var(--text-dim)">Version 1.0.0</div>
+        </div>
+        <a href="/" class="tab-btn" style="margin-top:8px;text-decoration:none">
+          <span class="tab-icon">🏠</span> Back to Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- ─── Main Content ─────────────────────────────────────────────────── -->
+    <main class="admin-main">
+
+      <!-- Header -->
+      <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <p>Monitor all websites, leads, and payments from one place.</p>
+      </div>
+
+      <!-- ─── Overview Tab ─────────────────────────────────────────────── -->
+      <div class="tab-panel active" id="panel-overview">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-icon">🌐</div>
+            <div class="stat-card-val" id="stat-total">—</div>
+            <div class="stat-card-label">Total Websites</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">📞</div>
+            <div class="stat-card-val" id="stat-leads">—</div>
+            <div class="stat-card-label">Total Leads</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">✅</div>
+            <div class="stat-card-val" id="stat-paid">—</div>
+            <div class="stat-card-label">Paid Websites</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">⏳</div>
+            <div class="stat-card-val" id="stat-pending">—</div>
+            <div class="stat-card-label">Pending</div>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+          <div class="stat-card" style="cursor:pointer" onclick="switchTab('websites')">
+            <div style="font-size:24px;margin-bottom:10px">🌐</div>
+            <div style="font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px">View All Websites</div>
+            <div style="font-size:13px;color:var(--text-muted)">See every website created</div>
+          </div>
+          <div class="stat-card" style="cursor:pointer" onclick="switchTab('leads')">
+            <div style="font-size:24px;margin-bottom:10px">📞</div>
+            <div style="font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px">View All Leads</div>
+            <div style="font-size:13px;color:var(--text-muted)">Customer enquiries captured</div>
+          </div>
+          <a href="chat.html" class="stat-card" style="cursor:pointer;text-decoration:none">
+            <div style="font-size:24px;margin-bottom:10px">➕</div>
+            <div style="font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px">Create New Website</div>
+            <div style="font-size:13px;color:var(--text-muted)">Start a new AI website</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ─── Websites Tab ──────────────────────────────────────────────── -->
+      <div class="tab-panel" id="panel-websites">
+        <div class="panel-header">
+          <h2>All Websites</h2>
+          <button class="btn-refresh" onclick="loadWebsitesManual()">🔄 Refresh</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Business Name</th>
+                <th>Slug</th>
+                <th>Category</th>
+                <th>Plan</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="websites-tbody">
+              <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">Loading websites...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── Leads Tab ─────────────────────────────────────────────────── -->
+      <div class="tab-panel" id="panel-leads">
+        <div class="panel-header">
+          <h2>All Leads</h2>
+          <button class="btn-refresh" onclick="loadLeadsManual()">🔄 Refresh</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Website</th>
+                <th>Message</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">Loading leads...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script>
+    // Tab switching helper (also called from onclick attributes above)
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === name);
+      });
+      document.querySelectorAll('.tab-panel').forEach(p => {
+        p.classList.toggle('active', p.id === `panel-${name}`);
+      });
+    }
+
+    // Manual refresh stubs (admin.js defines loadWebsites/loadLeads)
+    function loadWebsitesManual() { location.reload(); }
+    function loadLeadsManual()    { location.reload(); }
+  </script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

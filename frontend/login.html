@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(108,99,255,0.12), transparent),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(255,101,132,0.08), transparent);
+      pointer-events: none;
+    }
+
+    .auth-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 1;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .auth-brand {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .auth-brand .logo {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 14px;
+    }
+    .auth-brand h1 { font-size: 26px; color: var(--white); margin-bottom: 6px; }
+    .auth-brand p  { font-size: 14px; color: var(--text-muted); }
+
+    /* Tab switcher */
+    .auth-tabs {
+      display: flex;
+      background: var(--dark-2);
+      border-radius: var(--radius);
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+    }
+    .auth-tab.active {
+      background: var(--card-bg);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Form */
+    .auth-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    .form-input {
+      background: var(--dark-2);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: var(--font);
+      width: 100%;
+    }
+    .form-input:focus { border-color: var(--primary); }
+    .form-input::placeholder { color: var(--text-dim); }
+
+    .auth-btn {
+      padding: 15px;
+      border: none;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(108,99,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .auth-btn:hover    { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(108,99,255,0.5); }
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .auth-divider {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin: 4px 0;
+      position: relative;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%; width: 42%;
+      height: 1px;
+      background: var(--border);
+    }
+    .auth-divider::before { left: 0; }
+    .auth-divider::after  { right: 0; }
+
+    .auth-error {
+      background: rgba(255,77,109,0.1);
+      border: 1px solid rgba(255,77,109,0.3);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--error);
+      display: none;
+    }
+    .auth-error.show { display: block; }
+
+    .auth-success {
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.3);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--success);
+      display: none;
+    }
+    .auth-success.show { display: block; }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .back-link a { color: var(--primary); font-weight: 600; }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: flex; flex-direction: column; gap: 16px; }
+
+    /* Password strength */
+    .pw-strength { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; margin-top: 6px; }
+    .pw-strength-fill { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; width: 0%; }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="logo">🌐</div>
+      <h1>NexSite</h1>
+      <p>Sign in to manage your website</p>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</button>
+    </div>
+
+    <!-- Error / Success messages -->
+    <div class="auth-error"   id="auth-error"></div>
+    <div class="auth-success" id="auth-success"></div>
+
+    <!-- Login Form -->
+    <div class="form-panel active" id="panel-login">
+      <div class="form-group">
+        <label for="login-email">Email Address</label>
+        <input class="form-input" type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input class="form-input" type="password" id="login-password" placeholder="Your password" autocomplete="current-password">
+      </div>
+      <button class="auth-btn" id="login-btn" onclick="handleLogin()">
+        Sign In →
+      </button>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-panel" id="panel-register">
+      <div class="form-group">
+        <label for="reg-name">Full Name</label>
+        <input class="form-input" type="text" id="reg-name" placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label for="reg-email">Email Address</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="reg-password">Password <span style="color:var(--text-dim);font-weight:400">(min 6 chars)</span></label>
+        <input class="form-input" type="password" id="reg-password" placeholder="Choose a strong password" oninput="checkPasswordStrength(this.value)">
+        <div class="pw-strength"><div class="pw-strength-fill" id="pw-fill"></div></div>
+      </div>
+      <button class="auth-btn" id="register-btn" onclick="handleRegister()">
+        Create Account →
+      </button>
+    </div>
+
+    <div class="back-link">
+      <a href="/">← Back to NexSite</a>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script>
+    // ── Tab switching ────────────────────────────────────────────────────────
+    function switchAuthTab(tab) {
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+      document.getElementById('panel-login').classList.toggle('active', tab === 'login');
+      document.getElementById('panel-register').classList.toggle('active', tab === 'register');
+      hideMessages();
+    }
+
+    function hideMessages() {
+      document.getElementById('auth-error').classList.remove('show');
+      document.getElementById('auth-success').classList.remove('show');
+    }
+    function showError(msg) {
+      const el = document.getElementById('auth-error');
+      el.textContent = msg; el.classList.add('show');
+      document.getElementById('auth-success').classList.remove('show');
+    }
+    function showSuccess(msg) {
+      const el = document.getElementById('auth-success');
+      el.textContent = msg; el.classList.add('show');
+      document.getElementById('auth-error').classList.remove('show');
+    }
+
+    // ── Password strength indicator ──────────────────────────────────────────
+    function checkPasswordStrength(pw) {
+      const fill = document.getElementById('pw-fill');
+      let strength = 0;
+      if (pw.length >= 6)  strength++;
+      if (pw.length >= 10) strength++;
+      if (/[A-Z]/.test(pw)) strength++;
+      if (/[0-9]/.test(pw)) strength++;
+      if (/[^A-Za-z0-9]/.test(pw)) strength++;
+      const colors = ['', '#FF4D6D','#FFB347','#FFD700','#00C896','#6C63FF'];
+      const widths  = ['0%','20%','40%','60%','80%','100%'];
+      fill.style.width      = widths[strength];
+      fill.style.background = colors[strength] || '';
+    }
+
+    // ── Enter key support ────────────────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      const loginPanel = document.getElementById('panel-login');
+      if (loginPanel.classList.contains('active')) handleLogin();
+      else handleRegister();
+    });
+
+    // ── Handle Login ─────────────────────────────────────────────────────────
+    async function handleLogin() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const btn      = document.getElementById('login-btn');
+
+      if (!email || !password) return showError('Please enter your email and password');
+
+      btn.disabled     = true;
+      btn.textContent  = 'Signing in...';
+      hideMessages();
+
+      try {
+        const data = await API._post('/api/auth/login', { email, password });
+        // Save token + user info
+        localStorage.setItem('nexsite_token',    data.accessToken);
+        localStorage.setItem('nexsite_refresh',  data.refreshToken);
+        localStorage.setItem('nexsite_user',     JSON.stringify(data.user));
+
+        showSuccess('✅ Logged in! Redirecting...');
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+
+      } catch (err) {
+        showError(err.message || 'Login failed. Please check your credentials.');
+        btn.disabled    = false;
+        btn.textContent = 'Sign In →';
+      }
+    }
+
+    // ── Handle Register ──────────────────────────────────────────────────────
+    async function handleRegister() {
+      const fullName = document.getElementById('reg-name').value.trim();
+      const email    = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const btn      = document.getElementById('register-btn');
+
+      if (!email || !password) return showError('Email and password are required');
+      if (password.length < 6)  return showError('Password must be at least 6 characters');
+
+      btn.disabled    = true;
+      btn.textContent = 'Creating account...';
+      hideMessages();
+
+      try {
+        await API._post('/api/auth/register', { email, password, fullName });
+        showSuccess('✅ Account created! Please check your email to confirm, then sign in.');
+        btn.disabled    = false;
+        btn.textContent = 'Create Account →';
+        setTimeout(() => switchAuthTab('login'), 3000);
+
+      } catch (err) {
+        showError(err.message || 'Registration failed. Please try again.');
+        btn.disabled    = false;
+        btn.textContent = 'Create Account →';
+      }
+    }
+
+    // ── Redirect if already logged in ───────────────────────────────────────
+    const existingToken = localStorage.getItem('nexsite_token');
+    if (existingToken) window.location.href = 'dashboard.html';
+  </script>
+</body>
+</html>
