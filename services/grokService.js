@@ -6,7 +6,7 @@ const { extractJson, validateWebsiteJson, repairJson } = require('../utils/valid
 // ─── Config ───────────────────────────────────────────────────────────────────
 // Supported Grok models (in priority order — update if xAI changes names)
 const GROK_API_URL = process.env.GROK_API_URL || 'https://api.x.ai/v1/chat/completions';
-const GROK_MODEL   = process.env.GROK_MODEL   || 'grok-3-latest';
+const GROK_MODEL   = process.env.GROK_MODEL   || 'grok-4.3';
 
 /**
  * Build the system prompt
