@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexSite — AI Website Builder for Indian Businesses</title>
+  <meta name="description" content="Create a professional website for your small business in minutes using AI. No coding. No designers. Just chat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .navbar.scrolled { background: rgba(15,15,26,0.98); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+    .demo-chat { background: #1E1E32; border-radius: 16px; padding: 20px; font-size: 14px; }
+    .demo-msg  { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; }
+    .demo-msg.user { flex-direction: row-reverse; }
+    .demo-bubble { padding: 10px 16px; border-radius: 16px; max-width: 240px; line-height: 1.5; font-size: 13px; }
+    .demo-msg.bot  .demo-bubble { background: #2A2A45; color: #E8E8F0; border-radius: 4px 16px 16px 16px; }
+    .demo-msg.user .demo-bubble { background: linear-gradient(135deg, #6C63FF, #5A52E0); color: white; border-radius: 16px 4px 16px 16px; }
+    .demo-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .demo-av.bot  { background: #2A2A45; }
+    .demo-av.user { background: #3A3A55; }
+    .feature-icon-1 { background: rgba(108,99,255,0.15); }
+    .feature-icon-2 { background: rgba(255,101,132,0.15); }
+    .feature-icon-3 { background: rgba(37,211,102,0.15); }
+    .feature-icon-4 { background: rgba(255,179,71,0.15); }
+    .feature-icon-5 { background: rgba(0,200,150,0.15); }
+    .feature-icon-6 { background: rgba(99,179,255,0.15); }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Navbar ─────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <div class="logo-icon">🌐</div>
+        NexSite
+      </a>
+      <ul class="navbar-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <div class="navbar-cta">
+        <a href="login.html" class="btn btn-secondary" id="nav-login-btn">Sign In</a>
+        <a href="chat.html" class="btn btn-primary">Create Website Free →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="badge badge-primary" style="margin-bottom:24px">✨ AI-Powered Website Builder</div>
+        <h1>
+          Your Business Deserves a<br>
+          <span class="gradient-text">Professional Website</span>
+        </h1>
+        <p>Just chat. Describe your business. Get a stunning website in under 3 minutes — powered by AI. No coding. No designers. ₹299 to get started.</p>
+        <div class="hero-btns">
+          <a href="chat.html" class="btn btn-primary btn-lg">
+            🚀 Create My Website
+          </a>
+          <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num" data-count="500" data-suffix="+">0</div>
+            <div class="lbl">Websites Created</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-count="3" data-suffix=" min">0</div>
+            <div class="lbl">Avg. Setup Time</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-count="299" data-suffix=" ₹">0</div>
+            <div class="lbl">Starting Price</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-count="98" data-suffix="%">0</div>
+            <div class="lbl">Happy Customers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo chat preview -->
+      <div class="hero-visual" style="margin-top:56px">
+        <div class="hero-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #2A2A45">
+            <span style="font-size:20px">🤖</span>
+            <div>
+              <div style="font-weight:700;font-size:14px">NexSite AI</div>
+              <div style="font-size:12px;color:#25D366">● Online</div>
+            </div>
+          </div>
+          <div class="demo-chat">
+            <div class="demo-msg bot">
+              <div class="demo-av bot">🤖</div>
+              <div class="demo-bubble">👋 What's your business name?</div>
+            </div>
+            <div class="demo-msg user">
+              <div class="demo-av user">👤</div>
+              <div class="demo-bubble">Ravi's Dental Clinic</div>
+            </div>
+            <div class="demo-msg bot">
+              <div class="demo-av bot">🤖</div>
+              <div class="demo-bubble">Great! 🎉 What services do you offer?</div>
+            </div>
+            <div class="demo-msg user">
+              <div class="demo-av user">👤</div>
+              <div class="demo-bubble">Root Canal, Implants, Braces</div>
+            </div>
+            <div class="demo-msg bot">
+              <div class="demo-av bot">🤖</div>
+              <div class="demo-bubble">✨ Generating your website with AI...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Features ──────────────────────────────────────────────────────── -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="badge badge-primary" style="margin-bottom:12px">Features</div>
+        <h2>Everything You Need,<br><span class="gradient-text">Nothing You Don't</span></h2>
+        <p>Professional features built for Indian small businesses — gyms, clinics, coaching centres, restaurants, and agencies.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-1">🤖</div>
+          <h3>AI Content Generation</h3>
+          <p>Grok AI writes your website headlines, descriptions, services, and FAQ — customised to your business in seconds.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-2">💬</div>
+          <h3>WhatsApp-Style Builder</h3>
+          <p>No forms to fill. Just chat naturally like WhatsApp. Our AI collects everything it needs through conversation.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-3">🎨</div>
+          <h3>5 Premium Templates</h3>
+          <p>Choose from Coaching, Clinic, Gym, Restaurant, or Business templates — all mobile-responsive and modern.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-4">📞</div>
+          <h3>Lead Capture Built-In</h3>
+          <p>Every website comes with a contact form and WhatsApp button. Leads are saved automatically in your dashboard.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-5">🔒</div>
+          <h3>Secure Payments</h3>
+          <p>Pay securely via Razorpay — India's most trusted payment gateway. UPI, cards, net banking all supported.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon feature-icon-6">🌐</div>
+          <h3>Instant Publishing</h3>
+          <p>Your website goes live the moment payment is confirmed. Share the link on WhatsApp, Instagram, or Google Maps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── How It Works ──────────────────────────────────────────────────── -->
+  <section class="section" id="how-it-works" style="background:var(--dark-2)">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="badge badge-primary" style="margin-bottom:12px">Process</div>
+        <h2>Your Website in <span class="gradient-text">4 Simple Steps</span></h2>
+        <p>From zero to a live professional website in under 3 minutes.</p>
+      </div>
+      <div class="steps-grid animate-on-scroll">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4>Chat with AI</h4>
+          <p>Answer simple questions about your business — name, services, location. Takes 2 minutes.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4>AI Generates</h4>
+          <p>Grok AI writes all your website content — headlines, services, FAQ, and SEO tags automatically.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4>Preview & Pick</h4>
+          <p>See your website live in preview mode. Choose from 5 templates and pick your plan.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h4>Pay & Publish</h4>
+          <p>Pay securely via Razorpay. Your website goes live instantly with a shareable link.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Pricing ────────────────────────────────────────────────────────── -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="badge badge-primary" style="margin-bottom:12px">Pricing</div>
+        <h2>Simple, Transparent <span class="gradient-text">Pricing</span></h2>
+        <p>No hidden fees. No annual contracts. Cancel anytime.</p>
+      </div>
+      <div class="pricing-grid animate-on-scroll">
+        <!-- Starter -->
+        <div class="pricing-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">₹299 <span>setup</span></div>
+          <div class="plan-setup">then ₹59/month</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> AI-Generated Website</li>
+            <li><span class="check">✓</span> Free Subdomain</li>
+            <li><span class="check">✓</span> Contact Form</li>
+            <li><span class="check">✓</span> WhatsApp Button</li>
+            <li><span class="check">✓</span> Lead Management</li>
+            <li><span class="check">✓</span> Mobile Responsive</li>
+          </ul>
+          <a href="chat.html" class="btn btn-secondary" style="width:100%;justify-content:center">Get Started</a>
+        </div>
+        <!-- Premium -->
+        <div class="pricing-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <div class="plan-name">Premium</div>
+          <div class="plan-price">₹999 <span>setup</span></div>
+          <div class="plan-setup">then ₹99/month</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Everything in Starter</li>
+            <li><span class="check">✓</span> Custom Domain Support</li>
+            <li><span class="check">✓</span> Full SEO Optimization</li>
+            <li><span class="check">✓</span> Priority Support</li>
+            <li><span class="check">✓</span> All 5 Templates</li>
+            <li><span class="check">✓</span> Analytics Dashboard</li>
+          </ul>
+          <a href="chat.html" class="btn btn-primary" style="width:100%;justify-content:center">Get Premium →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner animate-on-scroll">
+        <h2>Ready to Build Your Website?</h2>
+        <p>Join hundreds of small businesses already growing online with NexSite.</p>
+        <a href="chat.html" class="btn btn-primary btn-lg">Start for Free — ₹299 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="navbar-brand" style="font-size:20px">
+            <div class="logo-icon">🌐</div> NexSite
+          </div>
+          <p>AI-powered website builder for Indian small businesses. Professional websites in minutes.</p>
+        </div>
+        <div>
+          <h5>Product</h5>
+          <ul class="footer-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="chat.html">Create Website</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Business</h5>
+          <ul class="footer-links">
+            <li><a href="#">Clinics</a></li>
+            <li><a href="#">Gyms</a></li>
+            <li><a href="#">Coaching</a></li>
+            <li><a href="#">Restaurants</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="admin.html">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 NexSite. Built with ❤️ for Indian businesses.</p>
+        <p style="color:var(--text-dim)">Powered by Grok AI · Supabase · Razorpay</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Swap Sign In → My Dashboard if already logged in
+    const _tok = localStorage.getItem('nexsite_token');
+    if (_tok) {
+      const btn = document.getElementById('nav-login-btn');
+      if (btn) { btn.textContent = 'My Dashboard'; btn.href = 'dashboard.html'; }
+    }
+  </script>
+</body>
+</html>
